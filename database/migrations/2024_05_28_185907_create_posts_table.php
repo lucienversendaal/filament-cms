@@ -14,6 +14,14 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title')->default(null)->nullable();
+            $table->string('slug')->default(null)->nullable()->unique();
+            $table->longText('content')->default(null)->nullable();
+            $table->longText('meta_description')->default(null)->nullable();
+            $table->boolean('is_published')->default(false);
+            $table->boolean('is_featured')->default(false);
+            $table->dateTime('published_at')->default(null)->nullable();
+            $table->foreignIdFor(App\Models\User::class)->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
